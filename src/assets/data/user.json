@@ -1,0 +1,27 @@
+[
+	{
+		"userId":1,
+		"firstName":"John",
+		"lastName":"Smith",
+		"employeeId":"emp1"
+	},
+	{
+		"userId":2,
+		"firstName":"Keevin",
+		"lastName":"Joe",
+		"employeeId":"emp2"
+	},
+	{
+		"userId":3,
+		"firstName":"Dan",
+		"lastName":"Kelly",
+		"employeeId":"emp3"
+	},
+	{
+		"userId":4,
+		"firstName":"Sam",
+		"lastName":"Lee",
+		"employeeId":"emp4"
+	}
+
+]

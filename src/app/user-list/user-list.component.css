@@ -1,0 +1,15 @@
+label {
+    width:200px;
+    text-align: left;
+    display: inline-block;
+    font-size: 12px;
+  }
+button {
+    padding: 10px 32px;
+    width:150px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    
+  }

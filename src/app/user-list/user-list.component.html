@@ -1,0 +1,70 @@
+
+<form [formGroup]="angForm" novalidate>
+<div class="container">
+        
+    <div class="input-group">
+            <input formControlName="userId" #userId type="hidden" class="form-control"/>
+        <label>First Name</label>
+        <input formControlName="firstName" #firstName type="text" class="form-control"/>
+
+    </div>
+    <div *ngIf="angForm.controls['firstName'].invalid && (angForm.controls['firstName'].dirty || angForm.controls['firstName'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['firstName'].errors.required">
+              First Name is required.
+            </div>
+    </div>
+    <div class="input-group">
+        <label>Last Name    </label> <input required type="text" class="form-control" formControlName="lastName" #lastName/> 
+    </div>
+    <div *ngIf="angForm.controls['lastName'].invalid && (angForm.controls['lastName'].dirty || angForm.controls['lastName'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['lastName'].errors.required">
+              Last Name is required.
+            </div>
+    </div>
+
+    <div class="input-group">
+    <label aria-setsize="30">Employee ID</label> <input required class="form-control"  type="text" formControlName="employeeId" #employeeId/> 
+    </div>
+    <div *ngIf="angForm.controls['employeeId'].invalid && (angForm.controls['employeeId'].dirty || angForm.controls['employeeId'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['employeeId'].errors.required">
+              Employee ID is required.
+            </div>
+    </div>
+    <div class="input-group" style="text-align:center">
+        <button type="submit" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-primary" (click)="addUser(firstName.value,lastName.value,employeeId.value,userId.value)">Add</button>
+        <button class="btn btn-primary" (click)="reset()">Reset</button>
+    </div>
+    
+    <hr/>
+</div>
+</form>
+<form [formGroup]="searchForm" novalidate>
+        <div class="container">
+        
+                <div class="input-group">
+                        <input formControlName="search" #search type="text" class="form-control"/>
+                        <label>Sort :    </label>
+                        <button class="btn btn-primary" (click)="findAll('firstName')">First Name</button>
+                        <button class="btn btn-primary" (click)="findAll('lastName')">Last Name </button>
+                        <button class="btn btn-primary" (click)="findAll('employeeId')">Employee ID</button>
+            
+                </div>
+                <div *ngIf="angForm.controls['firstName'].invalid && (angForm.controls['firstName'].dirty || angForm.controls['firstName'].touched)" class="alert alert-danger">
+                        <div *ngIf="angForm.controls['firstName'].errors.required">
+                          First Name is required.
+                        </div>
+                </div>
+        </div>
+        <hr/>
+</form>
+
+
+
+    <div class="container" *ngFor="let user of users">
+           <div> <label>{{user.firstName}}</label><button class="btn btn-primary" (click)=editUser(user)>Edit</button><br/>
+            <label>{{user.lastName}}</label><button class="btn btn-primary" (click)=deleteUser(user) >delete</button><br/>
+            <label>{{user.employeeId}}</label></div><br/>
+            <hr/>
+    </div>
+
+  
