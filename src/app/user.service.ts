@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from './user-list/user';
 import { HttpErrorResponse} from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 
 import { throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -14,7 +14,20 @@ export class UserService {
 
   private _url:string = "/assets/data/user.json";
   private _wsurl:string = "http://localhost:8080";
+
+  
+  manager:User;
+  private messageSource = new BehaviorSubject<User>(this.manager);
+  managerUpdated=this.messageSource.asObservable();
+
   constructor(private http: HttpClient) { }
+
+  updateManagerSelection(user:User){
+    this.messageSource.next(user);
+  }
+  getManagerSelection(){
+
+  }
 
   addUser(firstName:string,lastName:string,employeeId:string,userId:number){  
     const obj = {

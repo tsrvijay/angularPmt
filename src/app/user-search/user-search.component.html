@@ -1,0 +1,45 @@
+
+        <div class="user-header">
+
+               
+                <mat-form-field>
+                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+              </div>
+        <div class="user-container mat-elevation-z8">
+            <mat-table #table [dataSource]="userDataSource" matSort>
+
+                   
+                    
+                        <!-- Progress Column -->
+                        <ng-container matColumnDef="firstName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+                            <mat-cell *matCellDef="let user" (onclick)="modelCellClick()" > {{user.firstName}} </mat-cell> 
+                        </ng-container> 
+                        <ng-container matColumnDef="lastName">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+                                <mat-cell  *matCellDef="let user"> {{user.lastName}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="employeeId">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Employee Id </mat-header-cell>
+                                    <mat-cell (click)="modelCellClick(user)" *matCellDef="let user"> {{user.employeeId}} </mat-cell>
+                                </ng-container>
+                                 <!-- ID Column -->
+                     <ng-container matColumnDef="userId" >
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Action  </mat-header-cell>
+                        <mat-cell *matCellDef="let user"> <button class="btn btn-primary"  matInput (click)="modelCellClick(user)" placeholder="Select">Select</button> </mat-cell>
+                    </ng-container>
+                    
+                       
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            </mat-table>
+           
+        </div>
+
+        <div class="user-footer">
+                <button type="button" class="btn btn-outline-dark" (click)="modelOk()">Close</button>
+        </div>
+        
+

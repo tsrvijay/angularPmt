@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './user';
 import { UserService } from '../user.service';
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 
 
@@ -17,6 +17,7 @@ export class UserListComponent implements OnInit {
   
   constructor(private fb: FormBuilder,private _userService:UserService) {
     this.createForm();
+    this.refreshUser('firstName');
    }
 
   public firstName:string="";
@@ -27,18 +28,21 @@ export class UserListComponent implements OnInit {
   public errorMsg="";
 
   ngOnInit() {
-    this.refreshUser();
+    
   }
 
   private refreshUser(sortBy) {
     console.log('refresh called')
       this._userService.getUsers(sortBy).subscribe(data => this.users = data, error => this.errorMsg = error);
-    console.log('refresh completed')
+      
+    //console.log('refresh completed')
   }
 
   public addUser(firstName,lastName,employeeId,userId){
     console.log('test');
     this._userService.addUser(firstName,lastName,employeeId,userId);
+    // private user1:User={userId:userId,firstName:firstName,lastName:lastName,employeeId:employeeId};
+    // this.users.push(user1);
     this.refreshUser('firstName');
    }
   public deleteUser(user){
@@ -50,6 +54,55 @@ export class UserListComponent implements OnInit {
   public findAll(sortBy){
     console.log(sortBy);
     this.refreshUser(sortBy);
+  }
+
+  public sortByLastName(){
+    console.log(this.users);
+    //this.refreshUser(sortBy);
+
+    this.users.sort((a,b)=>{
+      if (a.lastName > b.lastName) { 
+        return 1;
+      } else if (b.lastName > a.lastName) { 
+        return -1;
+      } else {
+        return 0; 
+      }
+    }); 
+    console.log('After sort');
+    console.log(this.users);
+  }
+  public sortByFirstName(){
+    console.log(this.users);
+    //this.refreshUser(sortBy);
+
+    this.users.sort((a,b)=>{
+      if (a.firstName > b.firstName) { 
+        return 1;
+      } else if (b.firstName > a.firstName) { 
+        return -1;
+      } else {
+        return 0; 
+      }
+    }); 
+    console.log('After sort');
+    console.log(this.users);
+  }
+  public sortByEmployeeId(){
+    console.log(this.users);
+    //this.refreshUser(sortBy);
+
+    this.users.sort((a,b)=>{
+      if (a.employeeId > b.employeeId) { 
+        return 1;
+      } else if (b.employeeId > a.employeeId) { 
+        return -1;
+      } else {
+        return 0; 
+      }
+    }); 
+    console.log('After sort');
+    console.log(this.users);
   }
   
   public editUser(user){

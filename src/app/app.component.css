@@ -2,5 +2,12 @@
 label {
     width:1000px;
     text-align: right;
-    display: inline-block;
+    float: left;
+    clear: both;
+    margin-right:15px;
   }
+  button{
+    margin:50px;
+    
+  }
+  
