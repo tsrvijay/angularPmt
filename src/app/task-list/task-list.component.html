@@ -1,3 +1,91 @@
-<h2>TASK LIST</h2>
+<form [formGroup]="taskListForm" class="form-inline" novalidate> 
+  <div class="container">
+      <div class="input-group row">
+            <div class="col-sm-1">
+                    <label>Project    </label>
+            </div>
+             <div class="col-sm-2">
+                <input required  formControlName="projectName"
+                   #projectName type="text" class="form-control"/>
+             </div>
+            <div class="col-sm-1">
+                 </div>
+                 <div class="col-sm-1">
+                        <button type="submit" class="btn btn-primary"
+                            (click)="searchProject(content)">Search</button>
+                   </div>
+                    <div
+                      *ngIf="
+                      taskListForm.controls['projectName'].invalid &&
+                        (taskListForm.controls['projectName'].dirty ||
+                       taskListForm.controls['projectName'].touched)" class="alert alert-danger">
+                      <div *ngIf="taskListForm.controls['projectName'].errors.required">
+                        Project Name is required.
+                      </div>
+                    </div>
+            <div class="col-sm-1">
+              <label>Sort By :    </label>
+            </div>
+            <div class="col-sm-1">
+            <button class="btn btn-primary" (click)="sortByStartDate()">StartDate</button> 
+            </div>
+            <div class="col-sm-1"> 
+            <button class="btn btn-primary" (click)="sortByEndDate()">EndDate</button> 
+            </div>
+            <div class="col-sm-1">
+            <button class="btn btn-primary" (click)="sortByPriority()">Prioirty</button> 
+            </div>
+            <div class="col-sm-1">
+            <button class="btn btn-primary" (click)="sortByTask()">Task</button> 
+            </div>
+            
+    </div>
+  </div>
+  <hr/>
+</form>   
+  <div class="container" *ngFor="let task of tasks">
+      <div class="input-group row">
+                <div class="col-sm-2">
+                <label><b>Task </b></label>
+                </div>
+                <div class="col-sm-2">
+                    <label><b>Parent </b> </label>
+                </div>
+                <div class="col-sm-1">
+                  <label><b>Prioirty  </b></label>
+              </div>
+              <div class="col-sm-2">
+                  <label><b>Start Date </b> </label>
+              </div>
+              <div class="col-sm-2">
+                  <label><b>End Date  </b></label>
+              </div>
+        </div>
 
-<p>task-list works!</p>
+      <div class="input-group row">
+          <div class="col-sm-2">
+          <label>{{ task.task }} </label>
+          </div>
+          <div class="col-sm-2">
+              <label> {{ task.parentTask.title}} </label>
+          </div>
+          <div class="col-sm-1">
+            <label> {{ task.priority}} </label>
+        </div>
+        <div class="col-sm-2">
+            <label> {{ task.startDate}} </label>
+        </div>
+        <div class="col-sm-2">
+            <label> {{ task.endDate}} </label>
+        </div>
+
+        <div class="col-sm-1">
+          <button class="btn btn-primary" (click)="updateTask(task)">Edit</button>
+          </div>
+          <div class="col-sm-2">
+            <button class="btn btn-primary" (click)="endTask(task)">End Task</button>
+            </div>
+          </div>
+    <br />
+  </div>
+ 

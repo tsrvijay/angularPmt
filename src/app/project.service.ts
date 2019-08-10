@@ -17,8 +17,17 @@ export class ProjectService {
   constructor(private http: HttpClient) { }
   private _wsurl:string = "http://localhost:8080";
   
+  project:Project;
+  private messageSource = new BehaviorSubject<Project>(this.project);
+  projectUpdated=this.messageSource.asObservable();
+
+  updateProjectSelection(project:Project){
+    this.messageSource.next(project);
+  }
+
 
   addProject(project){  
+    console.log('Printing in service : ');
     console.log(project);
     this.http.post(`${this._wsurl}/Project/save`, project)
         .subscribe(res => console.log('Done'));
@@ -29,9 +38,8 @@ export class ProjectService {
       this.http.post(`${this._wsurl}/Project/delete`, project)
           .subscribe(res => console.log('Done'));
     }
-
-  getProjects(sortBy):Observable<Project>{
-    //this.http.post(this._url,)
+    
+  getProjects(sortBy):Observable<Project[]>{
     
     return this.http.get<Project[]>(`${this._wsurl}/Project/findAll/`+sortBy).pipe(
       retry(1),

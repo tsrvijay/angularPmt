@@ -1,0 +1,288 @@
+<form [formGroup]="taskAddForm" class="form-inline" novalidate>
+    <div class="container">
+      <div class="form-group row">
+          <div class="col-sm-3">
+          <label class="col-form-label">Project</label>
+        </div>
+        <div class="col-sm-3">
+          <input
+            required
+            formControlName="projectName"
+            #projectName
+            type="text"
+            class="form-control"
+          />
+        </div>
+        <div class="col-sm-3">
+        <button
+            type="submit"
+            class="btn btn-primary"
+            (click)="searchProject(content)"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+      <div
+        *ngIf="
+        taskAddForm.controls['projectName'].invalid &&
+          (taskAddForm.controls['projectName'].dirty ||
+          taskAddForm.controls['projectName'].touched)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="taskAddForm.controls['projectName'].errors.required">
+          Project Name is required.
+        </div>
+      </div>
+      <br />
+      <div class="form-group row">
+        <div class="col-sm-3">
+        <label class="col-form-label">Task</label>
+      </div>
+      <div class="col-sm-9">
+        <input
+          required
+          formControlName="task"
+          #task
+          type="text"
+          class="form-control"
+        />
+      </div>
+    </div>
+    <div
+      *ngIf="
+      taskAddForm.controls['task'].invalid &&
+        (taskAddForm.controls['task'].dirty ||
+        taskAddForm.controls['task'].touched)
+      "
+      class="alert alert-danger"
+    >
+      <div *ngIf="taskAddForm.controls['task'].errors.required">
+        Task is required.
+      </div>
+    </div>
+    <br/>
+
+      <div class="form-group row">
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-3">
+          <input
+            formControlName="parentTaskSelect"
+            #parentTaskSelect
+            type="checkbox"
+            id="parentTaskSelect"
+            name="parentTaskSelect"
+            checked="true"
+            
+            (click)="toggleControl()"
+          />
+          
+          <label for="parentTaskSelect">Parent Task</label>
+        
+        </div>
+    </div>
+
+    
+    
+        <!--  <input formControlName="startDate" #startDate type="date" value="2018-07-22" min="2000-01-01" max="2050-12-31">
+          <input formControlName="endDate" #endDate type="date" value="2018-07-22" min="2000-01-01" max="2050-12-31"> -->
+          <mat-card>
+            <mat-card-title></mat-card-title>
+            <mat-card-content>
+             <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>Start Date</label>
+                    </div>
+              <div class="col-sm-6">
+              <mat-form-field>
+                <input
+                  matInput 
+                  placeholder="Start Date"
+                  [matDatepicker]="startDate"
+                  [formControl]="startDateCntl"
+                />
+                <mat-datepicker-toggle matSuffix [for]="startDate">
+                </mat-datepicker-toggle>
+                <mat-datepicker [startAt]="startDate" #startDate></mat-datepicker>
+              </mat-form-field>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>End Date</label>
+                    </div>
+            <div class="col-sm-6">
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="End Date"
+                  [matDatepicker]="endDate"
+                  [formControl]="endDateCntl"
+                />
+                <mat-datepicker-toggle matSuffix [for]="endDate">
+                </mat-datepicker-toggle>
+                <mat-datepicker [startAt]="endDate" #endDate></mat-datepicker>
+                <mat-error align="end" *ngIf="endDateCntl.hasError('required')"
+                  >A valid date mm/dd/yyyy is required</mat-error
+                >
+              </mat-form-field>
+              </div>
+             </div>
+            </mat-card-content>
+          </mat-card>
+        
+      
+      <br />
+      <div class="input-group row ">
+        <div class="col-sm-3">
+          <label>Priority (0-30) </label>
+        </div>
+        <div class="col-sm-6">
+          <input
+            required
+            type="range"
+            min="0"
+            max="30"
+            class="form-control"
+            name="priority"
+            formControlName="priority"
+            #priority
+          />
+        </div>
+  
+        <div
+          *ngIf="
+          taskAddForm.controls['priority'].invalid &&
+            (taskAddForm.controls['priority'].dirty ||
+            taskAddForm.controls['priority'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="projectForm.controls['priority'].errors.required">
+            Priority is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-3">
+        <label class="col-form-label">Parent Task</label>
+      </div>
+      <div class="col-sm-3">
+        <input
+          required
+          formControlName="parentTask"
+          #parentTask
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="col-sm-3">
+            <button
+                type="submit"
+                formControlName="parentTaskSearch"
+                #parentTaskSearch
+                class="btn btn-primary"
+                [disabled]="parentTaskSearchDisable"
+                (click)="searchParentTask(content)">
+                Search
+              </button>
+              </div>
+    </div>
+    <div
+      *ngIf="
+      taskAddForm.controls['parentTask'].invalid &&
+        (taskAddForm.controls['parentTask'].dirty ||
+        taskAddForm.controls['parentTask'].touched)
+      "
+      class="alert alert-danger"
+    >
+      <div *ngIf="taskAddForm.controls['parentTask'].errors.required">
+        Task is required.
+      </div>
+    </div>
+
+      <div class="input-group row">
+        <div class="col-sm-3">
+          <label aria-setsize="30">User</label>
+        </div>
+  
+        <div class="col-sm-3">
+          <input
+            required
+            class="form-control"
+            type="text"
+            formControlName="userId"
+            #userId
+          />
+          <div
+            *ngIf="
+            taskAddForm.controls['userId'].invalid &&
+              (taskAddForm.controls['userId'].dirty ||
+              taskAddForm.controls['userId'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="taskAddForm.controls['userId'].errors.required">
+              User is required.
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-sm-3">
+          <ng-template #content let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title">Modal title</h4>
+              <button
+                type="button"
+                class="close"
+                aria-label="Close"
+                (click)="content.dismiss('Cross click')"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-light"
+                (click)="content.close('Close click')"
+              >
+                Close
+              </button>
+            </div>
+          </ng-template>
+          <button
+            type="submit"
+            formControlName="userSearch"
+            #userSearch
+            class="btn btn-primary"
+            (click)="searchManager(content)">
+            Search
+          </button>
+        </div>
+        <div class="input-group" style="text-align:center">
+          <button
+            type="submit"
+         
+            class="btn btn-primary"
+            (click)="
+              addTask(
+                task.value
+              )
+            "
+          >
+            Add
+          </button>
+          <button class="btn btn-primary" (click)="reset()">Reset</button>
+        </div>
+      </div>
+      <hr />
+    </div>
+  </form>
+  

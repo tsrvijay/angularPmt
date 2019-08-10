@@ -1,12 +1,28 @@
 label {
-    
-    text-align: left;
-    float: left;
-    clear: both;
-    margin-right:15px;
-  }
-  button{
-    margin:10px;
-    
-  }
+  width:200px;
+  text-align: left;
+  display: inline-block;
+  font-size: 14px;
+}
+button {
+  padding: 10px 32px;
+  width:150px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
   
+}
+
+
+/*label {
+    
+  text-align: left;
+  float: left;
+  clear: both;
+  margin-right:15px;
+}
+button{
+  margin:10px;
+  
+}*/

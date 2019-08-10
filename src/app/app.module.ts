@@ -49,12 +49,18 @@ import {
   MatTooltipModule,
   MatStepperModule,
 } from '@angular/material';
+import { TaskAddComponent } from './task-add/task-add.component';
+import { ProjectSearchComponent } from './project-search/project-search.component';
+import { ParenttaskSearchComponent } from './parenttask-search/parenttask-search.component';
 
 const appRoutes: Routes = [
   { path: 'tasks', component: TaskListComponent },
   { path: 'users', component: UserListComponent },
   { path: 'projects', component: ProjectComponent },
-  { path: 'userSearch', component: UserSearchComponent }
+  { path: 'userSearch', component: UserSearchComponent },
+  { path: 'projectSearch', component: ProjectSearchComponent },
+  { path: 'parentTaskSearch', component:ParenttaskSearchComponent},
+  { path: 'taskAdd', component: TaskAddComponent }
 ];
 
 @NgModule({
@@ -64,7 +70,10 @@ const appRoutes: Routes = [
     UserListComponent,
     TaskListComponent, 
     ProjectComponent,
-    UserSearchComponent
+    UserSearchComponent,
+    TaskAddComponent,
+    ProjectSearchComponent,
+    ParenttaskSearchComponent
   ],
   imports: [
     BrowserModule,

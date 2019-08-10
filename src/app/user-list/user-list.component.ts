@@ -34,19 +34,14 @@ export class UserListComponent implements OnInit {
   private refreshUser(sortBy) {
     console.log('refresh called')
       this._userService.getUsers(sortBy).subscribe(data => this.users = data, error => this.errorMsg = error);
-      
-    //console.log('refresh completed')
   }
 
   public addUser(firstName,lastName,employeeId,userId){
     console.log('test');
     this._userService.addUser(firstName,lastName,employeeId,userId);
-    // private user1:User={userId:userId,firstName:firstName,lastName:lastName,employeeId:employeeId};
-    // this.users.push(user1);
     this.refreshUser('firstName');
    }
   public deleteUser(user){
-    //this.angForm.setValue(user);
     this._userService.deleteUser(user);    
     console.log(user);
     this.refreshUser('firstName');
@@ -58,8 +53,6 @@ export class UserListComponent implements OnInit {
 
   public sortByLastName(){
     console.log(this.users);
-    //this.refreshUser(sortBy);
-
     this.users.sort((a,b)=>{
       if (a.lastName > b.lastName) { 
         return 1;
@@ -69,12 +62,10 @@ export class UserListComponent implements OnInit {
         return 0; 
       }
     }); 
-    console.log('After sort');
     console.log(this.users);
   }
   public sortByFirstName(){
     console.log(this.users);
-    //this.refreshUser(sortBy);
 
     this.users.sort((a,b)=>{
       if (a.firstName > b.firstName) { 
@@ -85,12 +76,10 @@ export class UserListComponent implements OnInit {
         return 0; 
       }
     }); 
-    console.log('After sort');
     console.log(this.users);
   }
   public sortByEmployeeId(){
     console.log(this.users);
-    //this.refreshUser(sortBy);
 
     this.users.sort((a,b)=>{
       if (a.employeeId > b.employeeId) { 

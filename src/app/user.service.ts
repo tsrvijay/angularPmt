@@ -48,7 +48,6 @@ export class UserService {
     }
 
   getUsers(sortBy):Observable<User[]>{
-    //this.http.post(this._url,)
     
     return this.http.get<User[]>(`${this._wsurl}/User/findAll/`+sortBy).pipe(
       retry(1),

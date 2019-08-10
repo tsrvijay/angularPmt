@@ -190,47 +190,86 @@
     <hr />
   </div>
 </form>
-<form [formGroup]="searchForm" novalidate>
-  <div class="container">
-    <div class="input-group">
-      <input
-        formControlName="search"
-        #search
-        type="text"
-        class="form-control"
-        
-      />
-    </div>
-    <div class="input-group">
-      <label>Sort : </label>
-      <button class="btn btn-primary" (click)="findAll('startDate')">
-        Start Date
-      </button>
-      <button class="btn btn-primary" (click)="findAll('endDate')">
-        End Date
-      </button>
-      <button class="btn btn-primary" (click)="findAll('priority')">
-        Priority
-      </button>
-      <button class="btn btn-primary" (click)="findAll('completedTasks')">
-        Completed
-      </button>
-    </div>
-  </div>
-</form>
 
-<div class="container" *ngFor="let project of projects">
-  <div>
-    <label>{{ project.projectName }}</label
-    ><button class="btn btn-primary" (click)="updateProject(project)">
-      Update</button
-    ><br />
-    <label>{{ project.startDate }}</label
-    ><button class="btn btn-primary" (click)="suspendProject(project)">
-      Suspend</button
-    ><br />
-    <label>{{ project.employeeId }}</label>
+<div class="container">
+    <div class="input-group row">
+        <div class="col-sm-12">
+          <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Start searching for a project"/>
+          </div>
+          <br/>
+    </div>
+    <div class="input-group row">
+          <div class="col-sm-2">
+            <label>Sort By :    </label>
+          </div>
+          <div class="col-sm-2">
+          <button class="btn btn-primary" (click)="sortByStartDate()">Start Date</button> 
+          </div>
+          <div class="col-sm-2">
+          <button class="btn btn-primary" (click)="sortByEndDate()">End Date</button> 
+          </div>
+          <div class="col-sm-2">
+          <button class="btn btn-primary" (click)="sortByPriority()">Prioirty</button> 
+          </div>
+          <div class="col-sm-2">
+          <button class="btn btn-primary" (click)="sortByCompleted()">Completed</button> 
+          </div>
+          
   </div>
+</div>
+<hr/>
+
+
+<div class="container" *ngFor="let project of projects | filter:searchText">
+    <div class="input-group row">
+        <div class="col-sm-6">
+        <label>Project Name : {{ project.projectName }} </label>
+        </div>
+        <div class="col-sm-3">
+            <label>Priority : {{ project.priority}} </label>
+        </div>
+    
+        <div class="col-sm-3">
+        <button class="btn btn-primary" (click)="updateProject(project)">Update</button>
+        </div>
+        <br />
+      </div>
+      <div class="input-group row">
+          <div class="col-sm-3">
+              <label>No of Tasks : {{ project.noOfTasks }}</label>
+          </div>
+          <div class="col-sm-3">
+              <label>Completed : {{ project.completedTasks }}</label>
+          </div>
+          <div class="col-sm-3">
+          </div>
+      
+          <div class="col-sm-3">
+              <button class="btn btn-primary" (click)="suspendProject(project)">Suspend</button>
+          </div>
+          <br />
+        </div>
+
+
+      <div class="input-group row">
+          <div class="col-sm-3">
+              <label>Start Date : {{ project.startDate }}</label>
+          </div>
+          <div class="col-sm-3">
+              <label>End Date : {{ project.endDate }}</label>
+          </div>
+          <div class="col-sm-3">
+          </div>
+      
+          <div class="col-sm-3">
+              
+          </div>
+          <br />
+        </div>
+  
+
+  
   <br />
   <hr />
 </div>
+
