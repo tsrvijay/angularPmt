@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './user';
 import { UserService } from '../user.service';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 
 
@@ -33,7 +33,8 @@ export class UserListComponent implements OnInit {
 
   private refreshUser(sortBy) {
     console.log('refresh called')
-      this._userService.getUsers(sortBy).subscribe(data => this.users = data, error => this.errorMsg = error);
+    this.users = null;
+    this._userService.getUsers(sortBy).subscribe(data => this.users = data, error => this.errorMsg = error);
   }
 
   public addUser(firstName,lastName,employeeId,userId){
@@ -42,7 +43,7 @@ export class UserListComponent implements OnInit {
     this.refreshUser('firstName');
    }
   public deleteUser(user){
-    this._userService.deleteUser(user);    
+    this._userService.deleteUser(user);   
     console.log(user);
     this.refreshUser('firstName');
   }

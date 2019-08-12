@@ -26,6 +26,21 @@ export class TaskService {
     this.messageSource.next(parentTask);
   }
 
+  editTask:Task;
+  private taskMessageSource = new BehaviorSubject<Task>(this.editTask);
+  taskUpdated=this.taskMessageSource.asObservable();
+
+  updateTaskSelection(editTask:Task){
+    this.taskMessageSource.next(editTask);
+  }
+
+  public updateTaskStatus(task:Task){  
+    console.log(task);
+    task.status='COMPLETED';
+    this.http.post(`${this._wsurl}/Task/updateStatus`, task)
+        .subscribe(res => console.log('Done'));
+  } 
+
   addParentTask(task){  
     console.log('Printing in service : ');
     console.log(task);

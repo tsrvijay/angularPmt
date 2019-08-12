@@ -6,6 +6,7 @@ import { ProjectService } from '../project.service';
 import { ProjectSearchComponent } from '../project-search/project-search.component';
 import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
 import { TaskService } from '../task.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-list',
@@ -27,7 +28,8 @@ export class TaskListComponent implements OnInit {
   taskListForm: FormGroup;
   errorMsg:String;
  
-  constructor(private fb: FormBuilder,private modalService: MatDialog,private projectService:ProjectService,private taskService:TaskService) {
+  constructor(private fb: FormBuilder,private modalService: MatDialog,private projectService:ProjectService,private taskService:TaskService,private router: Router) {
+
     this.createForm();
    }
 
@@ -126,5 +128,14 @@ export class TaskListComponent implements OnInit {
     }); 
     console.log(this.tasks);
   }
-
+ public updateTask(task:Task){
+  //taskAdd
+  console.log('end task' +task);
+  this.taskService.updateTaskSelection(task);
+  this.router.navigateByUrl('/taskAdd');
+ }
+ public endTask(task:Task){
+  console.log('update task' +task);
+  this.taskService.updateTaskStatus(task);
+ }
 }

@@ -26,7 +26,8 @@ export class ProjectService {
   }
 
 
-  addProject(project){  
+  addProject(project){ 
+     
     console.log('Printing in service : ');
     console.log(project);
     this.http.post(`${this._wsurl}/Project/save`, project)
@@ -36,6 +37,12 @@ export class ProjectService {
   deleteProject(project:Project){  
       console.log(project);
       this.http.post(`${this._wsurl}/Project/delete`, project)
+          .subscribe(res => console.log('Done'));
+    }
+
+    updateProjectStatus(project:Project){  
+      console.log(project);
+      this.http.post(`${this._wsurl}/Project/updateStatus`, project)
           .subscribe(res => console.log('Done'));
     }
     

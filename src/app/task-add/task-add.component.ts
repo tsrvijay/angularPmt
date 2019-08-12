@@ -11,6 +11,7 @@ import { ProjectSearchComponent } from '../project-search/project-search.compone
 import { ParentTask } from '../model/parentTask';
 import { ParenttaskSearchComponent } from '../parenttask-search/parenttask-search.component';
 import { TaskService } from '../task.service';
+import { Task } from '../model/task';
 
 
 @Component({
@@ -45,6 +46,7 @@ export class TaskAddComponent implements OnInit {
   public project:Project;
   public parentTask:ParentTask;
 
+  public updateTask:Task;
   constructor(private fb: FormBuilder,private modalService: MatDialog,private userService:UserService,private projectService:ProjectService,private taskService:TaskService) {
     this.createForm();
    }
@@ -66,6 +68,31 @@ export class TaskAddComponent implements OnInit {
       if (this.parentTask != null)
         this.taskAddForm.patchValue({parentTask: this.parentTask.title});
     });
+
+    this.taskService.taskUpdated.subscribe(message => { 
+      this.updateTask = message;
+      if (this.updateTask != null){
+          this.project = this.updateTask.project;
+          this.parentTask = this.updateTask.parentTask;
+          this.manager = this.updateTask.user;
+
+          this.taskAddForm.patchValue({projectName: this.project.projectName});
+          this.taskAddForm.patchValue({task: this.updateTask.task});
+          this.taskAddForm.patchValue({priority: this.updateTask.priority});
+          this.taskAddForm.patchValue({startDate: this.updateTask.startDate});
+          this.taskAddForm.patchValue({endDate: this.updateTask.endDate});
+          this.startDateCntl.setValue(this.startDate);
+          this.endDateCntl.setValue(this.endDate);
+      
+
+          if (this.parentTask != null)
+              this.taskAddForm.patchValue({parentTask: this.parentTask.title});
+          if (this.manager != null)
+              this.taskAddForm.patchValue({userId: this.manager.firstName + ' ' + this.manager.lastName});
+      
+      }
+    });
+
   }
 
   createForm() {
@@ -139,7 +166,7 @@ export class TaskAddComponent implements OnInit {
 
      const task = {task:taskName,parentTask:parentTask,project:this.project,
         startDate:this.startDateCntl.value,endDate:this.endDateCntl.value,priority:10,
-      status:"Open",user:this.manager};
+      status:"OPEN",user:this.manager};
       console.log('Task details ' + parentTask);
       
         this.taskService.addTask(task);

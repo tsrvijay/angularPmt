@@ -26,6 +26,7 @@ export class ProjectComponent implements OnInit {
   projectForm: FormGroup;
   searchForm: FormGroup;
   errorMsg:string;
+  message:string;
   public manager:User;
   public projects=[{ "projectId": 123, "projectName":"Apt 360", "startDate": "08/02/2019", "endDate":"08/02/201", "priority":1, "noOfTasks":10,
     "completedTasks":2, "status":"completed", 
@@ -91,11 +92,23 @@ export class ProjectComponent implements OnInit {
     console.log(managerId);
     
    
-    console.log(this.startDate);
-    const project = {projectName:projectName,priority:priority,manager:this.manager,startDate:this.startDateCntl.value,endDate:this.endDateCntl.value};
+    console.log(this.startDate); 
     
-    console.log('Project details ' + project);
-     this.projectService.addProject(project);
+    
+    if(this.project != null){
+      const project = {projectId:this.project.projectId, projectName:projectName,priority:priority,status:'OPEN',manager:this.manager,startDate:this.startDateCntl.value,endDate:this.endDateCntl.value};
+      this.projectService.addProject(project);
+      console.log('Project details ' + project);
+    }else{
+      const project = {projectName:projectName,priority:priority,status:'OPEN',manager:this.manager,startDate:this.startDateCntl.value,endDate:this.endDateCntl.value};
+      this.projectService.addProject(project);
+      console.log('Project details ' + project);
+      //this.projects.findIndex(project)
+    }
+
+    
+    this.projectService.getProjects('projectName').subscribe(data => this.projects = data, error => this.errorMsg = error);
+     
    }
 
    public sortByStartDate(){
@@ -160,9 +173,14 @@ export class ProjectComponent implements OnInit {
     console.log(this.projects);
   }
 
-   public suspendProject(){
+   public suspendProject(project:Project){
      // write a method to update project status as suspended.
+    
+     project.status='SUSPEND'; 
+    this.projectService.updateProjectStatus(project);
+     //updateProjectStatus
     console.log('suspend Project Called');
+    this.message='Project Suspended';
    }
    public reset(){
     this.projectForm.reset();
@@ -176,6 +194,7 @@ export class ProjectComponent implements OnInit {
 
 
   public updateProject(project:Project){
+    this.project = project;
    this.manager = project.manager;
    this.projectForm.patchValue({managerId:this.manager.firstName});
    this.projectForm.patchValue({projectId:project.projectId,projectName:project.projectName,startDate:project.startDate,endDate:project.endDate,priority:project.priority, managerId:this.manager.firstName});
@@ -183,6 +202,8 @@ export class ProjectComponent implements OnInit {
    this.endDateCntl.setValue(project.endDate);
     
     console.log(project);
+
+    
   }
   public searchManager(content){
     console.log('Printing manager');
